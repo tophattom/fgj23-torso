@@ -9,14 +9,22 @@ class Cheerleader extends FlxSpriteGroup {
 	static inline var ARM_UP_ANGLE = 150.0;
 	static inline var LEG_UP_ANGLE = 60.0;
 
+	static inline var JUMP_FORCE = 700.0;
+	static inline var GRAVITY = 1500.0;
+
 	var leftArm:FlxSprite;
 	var rightArm:FlxSprite;
 	var leftLeg:FlxSprite;
 	var rightLeg:FlxSprite;
 	var torso:FlxSprite;
 
+	var startY:Float;
+	var jumping = false;
+
 	public function new(x:Float, y:Float) {
 		super(x, y);
+
+		startY = y;
 
 		torso = new FlxSprite(12, 0);
 		torso.makeGraphic(50, 100, FlxColor.GREEN);
@@ -44,6 +52,7 @@ class Cheerleader extends FlxSpriteGroup {
 	}
 
 	override function update(elapsed:Float) {
+		updateMovement();
 		updatePose();
 
 		super.update(elapsed);
@@ -60,5 +69,23 @@ class Cheerleader extends FlxSpriteGroup {
 
 		leftLeg.angle = leftLegUp ? LEG_UP_ANGLE : 0.0;
 		rightLeg.angle = rightLegUp ? -LEG_UP_ANGLE : 0.0;
+	}
+
+	function updateMovement() {
+		var jumpPressed = FlxG.keys.justPressed.SPACE;
+
+		if (!jumping && jumpPressed) {
+			jumping = true;
+
+			velocity.y = -JUMP_FORCE;
+			acceleration.y = GRAVITY;
+		}
+
+		if (y > startY) {
+			velocity.y = 0;
+			acceleration.y = 0;
+			y = startY;
+			jumping = false;
+		}
 	}
 }
