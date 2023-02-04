@@ -19,19 +19,15 @@ class PlayState extends FlxState {
 
 		track = new FlxBackdrop(AssetPaths.Track__png, X);
 		track.y = 240;
+		track.velocity.x = -100;
 		track.scrollFactor.set(1, 0);
 		add(track);
 
-		runner = new Runner(200, 30);
-		runner.velocity.x = 100;
+		runner = new Runner(100, 100);
 		add(runner);
 
 		player = new Cheerleader(500, 190);
 		add(player);
-
-		FlxG.camera.follow(runner, LOCKON);
-		FlxG.camera.targetOffset.x = 200;
-		FlxG.camera.targetOffset.y = -70;
 
 		var tracker = new ScoreTracker(player);
 
