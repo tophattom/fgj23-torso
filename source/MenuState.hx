@@ -17,8 +17,8 @@ class MenuState extends FlxState {
 		background = new FlxSprite(0, 0, AssetPaths.menu_bg__png);
 		add(background);
 
-		newGameButton = new FlxButton(335, 219, null, newGame);
-		newGameButton.loadGraphic(AssetPaths.new_game__png, true, 128, 42);
+		newGameButton = new FlxButton(326, 391, null, newGame);
+		newGameButton.loadGraphic(AssetPaths.new_game__png, true, 148, 47);
 		add(newGameButton);
 	}
 }
