@@ -24,7 +24,7 @@ class MenuState extends FlxState {
 		newGameButton.loadGraphic(AssetPaths.new_game__png, true, 148, 47);
 		add(newGameButton);
 
-		volumeSlider = new VolumeSlider(24, 16);
+		volumeSlider = new VolumeSlider(24, 21);
 		add(volumeSlider);
 	}
 }

@@ -19,7 +19,7 @@ class PauseState extends FlxSubState {
 		pausedText.screenCenter();
 		add(pausedText);
 
-		var volumeSlider = new VolumeSlider(24, 16);
+		var volumeSlider = new VolumeSlider(24, 21);
 		add(volumeSlider);
 	}
 
