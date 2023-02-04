@@ -31,6 +31,7 @@ class Cheerleader extends FlxNestedSprite {
 	public function new(x:Float, y:Float) {
 		super(x, y);
 		scrollFactor.set(0, 0);
+		makeGraphic(0, 0);
 
 		startY = y;
 
