@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
+import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 
 using flixel.util.FlxSpriteUtil;
@@ -30,6 +31,8 @@ class PlayState extends FlxState {
 	var hud:HUD;
 
 	var scoreTracker:ScoreTracker;
+
+	var music:FlxSound;
 
 	var speed:Float = INITIAL_SPEED;
 
@@ -75,8 +78,8 @@ class PlayState extends FlxState {
 
 		scoreTracker = new ScoreTracker(player, onScoreChange);
 
-		if (FlxG.sound.music == null) {
-			FlxG.sound.play(AssetPaths.main_song__ogg, 1.0, false, null, true, endGame);
+		if (music == null) {
+			music = FlxG.sound.play(AssetPaths.main_song__ogg, 1.0, false, null, true, endGame);
 		}
 	}
 

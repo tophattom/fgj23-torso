@@ -26,5 +26,7 @@ class MenuState extends FlxState {
 
 		volumeSlider = new VolumeSlider(24, 21);
 		add(volumeSlider);
+
+		FlxG.sound.cache(AssetPaths.main_song__ogg);
 	}
 }
