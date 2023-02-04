@@ -10,7 +10,7 @@ class Cheerleader extends FlxNestedSprite {
 	static inline var LEG_UP_ANGLE = 90.0;
 
 	static inline var JUMP_FORCE = 900.0;
-	static inline var GRAVITY = 4000.0;
+	static inline var GRAVITY = 3700.0;
 
 	public var pose(get, never):Pose;
 
