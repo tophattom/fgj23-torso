@@ -14,6 +14,8 @@ class MenuState extends FlxState {
 	}
 
 	override public function create() {
+		super.create();
+
 		background = new FlxSprite(0, 0, AssetPaths.menu_bg__png);
 		add(background);
 

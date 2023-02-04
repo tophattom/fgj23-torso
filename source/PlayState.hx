@@ -34,6 +34,8 @@ class PlayState extends FlxState {
 	var speed:Float = INITIAL_SPEED;
 
 	override public function create() {
+		super.create();
+
 		background = new FlxSprite(0, 0, AssetPaths.sky__png);
 		add(background);
 
@@ -73,7 +75,9 @@ class PlayState extends FlxState {
 
 		scoreTracker = new ScoreTracker(player, onScoreChange);
 
-		super.create();
+		if (FlxG.sound.music == null) {
+			FlxG.sound.play(AssetPaths.main_song__ogg, 1.0, false, null, true, endGame);
+		}
 	}
 
 	override public function update(elapsed:Float) {
@@ -98,6 +102,13 @@ class PlayState extends FlxState {
 		}
 
 		super.update(elapsed);
+	}
+
+	function endGame() {
+		var gameOverState = new GameOverState();
+		gameOverState.win = true;
+		gameOverState.score = scoreTracker.score;
+		FlxG.switchState(gameOverState);
 	}
 
 	function onScoreChange(diff:Float) {
