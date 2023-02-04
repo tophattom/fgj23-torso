@@ -2,16 +2,15 @@ package;
 
 import flixel.FlxG;
 import flixel.addons.display.FlxNestedSprite;
-import flixel.util.FlxColor;
 
 typedef Pose = Int;
 
 class Cheerleader extends FlxNestedSprite {
-	static inline var ARM_UP_ANGLE = 150.0;
-	static inline var LEG_UP_ANGLE = 60.0;
+	static inline var ARM_UP_ANGLE = 135.0;
+	static inline var LEG_UP_ANGLE = 90.0;
 
-	static inline var JUMP_FORCE = 700.0;
-	static inline var GRAVITY = 1500.0;
+	static inline var JUMP_FORCE = 900.0;
+	static inline var GRAVITY = 4000.0;
 
 	public var pose(get, never):Pose;
 
@@ -35,42 +34,49 @@ class Cheerleader extends FlxNestedSprite {
 
 		startY = y;
 
-		torso = new FlxNestedSprite();
-		torso.relativeX = 12;
-		torso.relativeY = 0;
-		torso.makeGraphic(50, 100, FlxColor.GREEN);
-		add(torso);
-
-		leftArm = new FlxNestedSprite();
-		leftArm.makeGraphic(12, 70, FlxColor.RED);
-		leftArm.origin.set(6, 6);
-		add(leftArm);
-
-		rightArm = new FlxNestedSprite();
-		rightArm.relativeX = 62;
-		rightArm.relativeY = 0;
-		rightArm.makeGraphic(12, 70, FlxColor.RED);
-		rightArm.origin.set(6, 6);
-		add(rightArm);
-
 		leftLeg = new FlxNestedSprite();
-		leftLeg.relativeX = 12;
-		leftLeg.relativeY = 100;
-		leftLeg.makeGraphic(12, 70, FlxColor.BLUE);
-		leftLeg.origin.set(6, 6);
+		leftLeg.loadGraphic(AssetPaths.cl_leg_l__png, true, 90, 260);
+		leftLeg.animation.add('down', [0]);
+		leftLeg.animation.add('up', [1]);
+		leftLeg.relativeX = -28;
+		leftLeg.relativeY = 9;
 		add(leftLeg);
 
 		rightLeg = new FlxNestedSprite();
-		rightLeg.relativeX = 50;
-		rightLeg.relativeY = 100;
-		rightLeg.makeGraphic(12, 70, FlxColor.BLUE);
-		rightLeg.origin.set(6, 6);
+		rightLeg.loadGraphic(AssetPaths.cl_leg_r__png, true, 90, 260);
+		rightLeg.animation.add('down', [0]);
+		rightLeg.animation.add('up', [1]);
+		rightLeg.relativeX = 5;
+		rightLeg.relativeY = 6;
 		add(rightLeg);
+
+		torso = new FlxNestedSprite();
+		torso.relativeX = 0;
+		torso.relativeY = 0;
+		torso.loadGraphic(AssetPaths.cl_torso__png);
+		add(torso);
+
+		leftArm = new FlxNestedSprite();
+		leftArm.loadGraphic(AssetPaths.cl_arm_l__png, true, 70, 220);
+		leftArm.animation.add('down', [0]);
+		leftArm.animation.add('up', [1]);
+		leftArm.relativeX = -16;
+		leftArm.relativeY = -39;
+		add(leftArm);
+
+		rightArm = new FlxNestedSprite();
+		rightArm.loadGraphic(AssetPaths.cl_arm_r__png, true, 70, 220);
+		rightArm.animation.add('down', [0]);
+		rightArm.animation.add('up', [1]);
+		rightArm.relativeX = 26;
+		rightArm.relativeY = -43;
+		add(rightArm);
 	}
 
 	override function update(elapsed:Float) {
 		updateMovement();
 		updatePose();
+		updateGraphics();
 
 		super.update(elapsed);
 	}
@@ -89,12 +95,40 @@ class Cheerleader extends FlxNestedSprite {
 		if (!jumping && leftLegUp && rightLegUp) {
 			leftLegUp = rightLegUp = false;
 		}
+	}
 
-		leftArm.relativeAngle = leftArmUp ? ARM_UP_ANGLE : 0.0;
-		rightArm.relativeAngle = rightArmUp ? -ARM_UP_ANGLE : 0.0;
+	function updateGraphics() {
+		if (leftArmUp) {
+			leftArm.animation.play('up');
+			leftArm.relativeAngle = ARM_UP_ANGLE;
+		} else {
+			leftArm.animation.play('down');
+			leftArm.relativeAngle = 0.0;
+		}
 
-		leftLeg.relativeAngle = leftLegUp ? LEG_UP_ANGLE : 0.0;
-		rightLeg.relativeAngle = rightLegUp ? -LEG_UP_ANGLE : 0.0;
+		if (rightArmUp) {
+			rightArm.animation.play('up');
+			rightArm.relativeAngle = -ARM_UP_ANGLE;
+		} else {
+			rightArm.animation.play('down');
+			rightArm.relativeAngle = 0.0;
+		}
+
+		if (leftLegUp) {
+			leftLeg.animation.play('up');
+			leftLeg.relativeAngle = LEG_UP_ANGLE;
+		} else {
+			leftLeg.animation.play('down');
+			leftLeg.relativeAngle = 0.0;
+		}
+
+		if (rightLegUp) {
+			rightLeg.animation.play('up');
+			rightLeg.relativeAngle = -LEG_UP_ANGLE;
+		} else {
+			rightLeg.animation.play('down');
+			rightLeg.relativeAngle = 0.0;
+		}
 	}
 
 	function updateMovement() {
