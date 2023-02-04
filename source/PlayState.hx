@@ -91,6 +91,10 @@ class PlayState extends FlxState {
 		playerShadow.scale.set(shadowScale, shadowScale);
 		playerShadow.alpha = shadowAlpha;
 
+		if (FlxG.keys.justPressed.ESCAPE) {
+			openSubState(new PauseState());
+		}
+
 		super.update(elapsed);
 	}
 
