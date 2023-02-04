@@ -8,6 +8,7 @@ import flixel.ui.FlxButton;
 class MenuState extends FlxState {
 	var background:FlxSprite;
 	var newGameButton:FlxButton;
+	var volumeSlider:VolumeSlider;
 
 	function newGame() {
 		FlxG.switchState(new PlayState());
@@ -22,5 +23,8 @@ class MenuState extends FlxState {
 		newGameButton = new FlxButton(326, 380, null, newGame);
 		newGameButton.loadGraphic(AssetPaths.new_game__png, true, 148, 47);
 		add(newGameButton);
+
+		volumeSlider = new VolumeSlider(24, 16);
+		add(volumeSlider);
 	}
 }

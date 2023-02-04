@@ -18,6 +18,9 @@ class PauseState extends FlxSubState {
 		pausedText.setFormat(AssetPaths.LilitaOne_Regular__ttf, 40, FlxColor.WHITE, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		pausedText.screenCenter();
 		add(pausedText);
+
+		var volumeSlider = new VolumeSlider(24, 16);
+		add(volumeSlider);
 	}
 
 	override function update(elapsed:Float) {
