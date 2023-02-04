@@ -10,7 +10,7 @@ using flixel.util.FlxSpriteUtil;
 
 class PlayState extends FlxState {
 	static inline var INITIAL_SPEED = 200.0;
-	static inline var DRAG = 5.0;
+	static inline var DRAG = 10.0;
 	static inline var GRASS_BACK_SPEED_MULTIPLIER = 0.5;
 	static inline var RAFTERS_SPEED_MULTIPLIER = 0.3;
 
@@ -77,6 +77,13 @@ class PlayState extends FlxState {
 	}
 
 	override public function update(elapsed:Float) {
+		if (track.velocity.x >= 0) {
+			var gameOverState = new GameOverState();
+			gameOverState.win = true;
+			gameOverState.score = scoreTracker.score;
+			FlxG.switchState(gameOverState);
+		}
+
 		runner.setAnimSpeed(Math.abs(track.velocity.x));
 		grassBack.velocity.x = track.velocity.x * GRASS_BACK_SPEED_MULTIPLIER;
 		rafters.velocity.x = track.velocity.x * RAFTERS_SPEED_MULTIPLIER;
