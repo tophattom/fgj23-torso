@@ -17,8 +17,6 @@ class PlayState extends FlxState {
 	static inline var PLAYER_X = 500;
 	static inline var PLAYER_Y = 190;
 
-	static inline var POPUP_OFFSET_Y = -35;
-
 	var background:FlxSprite;
 	var grassBack:FlxBackdrop;
 	var grassFront:FlxSprite;
@@ -79,7 +77,7 @@ class PlayState extends FlxState {
 	override public function update(elapsed:Float) {
 		if (track.velocity.x >= 0) {
 			var gameOverState = new GameOverState();
-			gameOverState.win = true;
+			gameOverState.win = false;
 			gameOverState.score = scoreTracker.score;
 			FlxG.switchState(gameOverState);
 		}
@@ -98,10 +96,6 @@ class PlayState extends FlxState {
 
 	function onScoreChange(diff:Float) {
 		track.velocity.x -= diff;
-
-		if (diff > 0) {
-			hud.updateScore(scoreTracker.score);
-			add(new ScorePopup(PLAYER_X, player.y + POPUP_OFFSET_Y, diff));
-		}
+		hud.updateScore(scoreTracker.score);
 	}
 }
