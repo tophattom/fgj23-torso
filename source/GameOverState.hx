@@ -22,10 +22,6 @@ class GameOverState extends FlxState {
 		FlxG.switchState(new PlayState());
 	}
 
-	function menu() {
-		FlxG.switchState(new MenuState());
-	}
-
 	override public function create() {
 		background = new FlxSprite(0, 0, AssetPaths.game_over_bg__png);
 		add(background);
@@ -53,8 +49,7 @@ class GameOverState extends FlxState {
 		retryButton.loadGraphic(AssetPaths.retry__png, true, 148, 47);
 		add(retryButton);
 
-		menuButton = new FlxButton(326, 307, null, menu);
-		menuButton.loadGraphic(AssetPaths.menu__png, true, 148, 47);
+		menuButton = new MenuButton(326, 307);
 		add(menuButton);
 	}
 }
