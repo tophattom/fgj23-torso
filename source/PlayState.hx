@@ -27,7 +27,6 @@ class PlayState extends FlxState {
 		add(runner);
 
 		player = new Cheerleader(500, 280);
-		player.scrollFactor.set(0, 0);
 		add(player);
 
 		FlxG.camera.follow(runner, LOCKON);

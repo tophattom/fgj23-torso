@@ -1,22 +1,21 @@
 package;
 
 import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.group.FlxSpriteGroup;
+import flixel.addons.display.FlxNestedSprite;
 import flixel.util.FlxColor;
 
-class Cheerleader extends FlxSpriteGroup {
+class Cheerleader extends FlxNestedSprite {
 	static inline var ARM_UP_ANGLE = 150.0;
 	static inline var LEG_UP_ANGLE = 60.0;
 
 	static inline var JUMP_FORCE = 700.0;
 	static inline var GRAVITY = 1500.0;
 
-	var leftArm:FlxSprite;
-	var rightArm:FlxSprite;
-	var leftLeg:FlxSprite;
-	var rightLeg:FlxSprite;
-	var torso:FlxSprite;
+	var leftArm:FlxNestedSprite;
+	var rightArm:FlxNestedSprite;
+	var leftLeg:FlxNestedSprite;
+	var rightLeg:FlxNestedSprite;
+	var torso:FlxNestedSprite;
 
 	var startY:Float;
 	var jumping = false;
@@ -28,29 +27,38 @@ class Cheerleader extends FlxSpriteGroup {
 
 	public function new(x:Float, y:Float) {
 		super(x, y);
+		scrollFactor.set(0, 0);
 
 		startY = y;
 
-		torso = new FlxSprite(12, 0);
+		torso = new FlxNestedSprite();
+		torso.relativeX = 12;
+		torso.relativeY = 0;
 		torso.makeGraphic(50, 100, FlxColor.GREEN);
 		add(torso);
 
-		leftArm = new FlxSprite(0, 0);
+		leftArm = new FlxNestedSprite();
 		leftArm.makeGraphic(12, 70, FlxColor.RED);
 		leftArm.origin.set(6, 6);
 		add(leftArm);
 
-		rightArm = new FlxSprite(62, 0);
+		rightArm = new FlxNestedSprite();
+		rightArm.relativeX = 62;
+		rightArm.relativeY = 0;
 		rightArm.makeGraphic(12, 70, FlxColor.RED);
 		rightArm.origin.set(6, 6);
 		add(rightArm);
 
-		leftLeg = new FlxSprite(12, 100);
+		leftLeg = new FlxNestedSprite();
+		leftLeg.relativeX = 12;
+		leftLeg.relativeY = 100;
 		leftLeg.makeGraphic(12, 70, FlxColor.BLUE);
 		leftLeg.origin.set(6, 6);
 		add(leftLeg);
 
-		rightLeg = new FlxSprite(50, 100);
+		rightLeg = new FlxNestedSprite();
+		rightLeg.relativeX = 50;
+		rightLeg.relativeY = 100;
 		rightLeg.makeGraphic(12, 70, FlxColor.BLUE);
 		rightLeg.origin.set(6, 6);
 		add(rightLeg);
@@ -78,11 +86,11 @@ class Cheerleader extends FlxSpriteGroup {
 			leftLegUp = rightLegUp = false;
 		}
 
-		leftArm.angle = leftArmUp ? ARM_UP_ANGLE : 0.0;
-		rightArm.angle = rightArmUp ? -ARM_UP_ANGLE : 0.0;
+		leftArm.relativeAngle = leftArmUp ? ARM_UP_ANGLE : 0.0;
+		rightArm.relativeAngle = rightArmUp ? -ARM_UP_ANGLE : 0.0;
 
-		leftLeg.angle = leftLegUp ? LEG_UP_ANGLE : 0.0;
-		rightLeg.angle = rightLegUp ? -LEG_UP_ANGLE : 0.0;
+		leftLeg.relativeAngle = leftLegUp ? LEG_UP_ANGLE : 0.0;
+		rightLeg.relativeAngle = rightLegUp ? -LEG_UP_ANGLE : 0.0;
 	}
 
 	function updateMovement() {
