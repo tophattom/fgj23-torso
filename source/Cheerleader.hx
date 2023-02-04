@@ -21,6 +21,11 @@ class Cheerleader extends FlxSpriteGroup {
 	var startY:Float;
 	var jumping = false;
 
+	var leftArmUp:Bool;
+	var rightArmUp:Bool;
+	var leftLegUp:Bool;
+	var rightLegUp:Bool;
+
 	public function new(x:Float, y:Float) {
 		super(x, y);
 
@@ -59,10 +64,19 @@ class Cheerleader extends FlxSpriteGroup {
 	}
 
 	function updatePose() {
-		var leftArmUp = FlxG.keys.pressed.D;
-		var rightArmUp = FlxG.keys.pressed.K;
-		var leftLegUp = FlxG.keys.pressed.F;
-		var rightLegUp = FlxG.keys.pressed.J;
+		var prevLeftLegUp = leftLegUp;
+		var prevRightLegUp = rightLegUp;
+		var canLiftLeftLeg = jumping || !prevRightLegUp;
+		var canLiftRightLeg = jumping || !prevLeftLegUp;
+
+		leftArmUp = FlxG.keys.pressed.D;
+		rightArmUp = FlxG.keys.pressed.K;
+		leftLegUp = canLiftLeftLeg && FlxG.keys.pressed.F;
+		rightLegUp = canLiftRightLeg && FlxG.keys.pressed.J;
+
+		if (!jumping && leftLegUp && rightLegUp) {
+			leftLegUp = rightLegUp = false;
+		}
 
 		leftArm.angle = leftArmUp ? ARM_UP_ANGLE : 0.0;
 		rightArm.angle = rightArmUp ? -ARM_UP_ANGLE : 0.0;
