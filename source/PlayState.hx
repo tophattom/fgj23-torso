@@ -4,12 +4,18 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
+import flixel.util.FlxColor;
+
+using flixel.util.FlxSpriteUtil;
 
 class PlayState extends FlxState {
 	static inline var INITIAL_SPEED = 200.0;
 	static inline var DRAG = 5.0;
 	static inline var GRASS_BACK_SPEED_MULTIPLIER = 0.5;
 	static inline var RAFTERS_SPEED_MULTIPLIER = 0.3;
+
+	static inline var PLAYER_X = 500;
+	static inline var PLAYER_Y = 190;
 
 	var background:FlxSprite;
 	var grassBack:FlxBackdrop;
@@ -18,6 +24,7 @@ class PlayState extends FlxState {
 	var track:FlxBackdrop;
 	var runner:Runner;
 	var player:Cheerleader;
+	var playerShadow:FlxSprite;
 	var hud:HUD;
 
 	var scoreTracker:ScoreTracker;
@@ -50,7 +57,13 @@ class PlayState extends FlxState {
 		runner = new Runner(100, 100);
 		add(runner);
 
-		player = new Cheerleader(500, 190);
+		playerShadow = new FlxSprite(PLAYER_X, PLAYER_Y + 250);
+		playerShadow.makeGraphic(80, 20, FlxColor.TRANSPARENT, true);
+		playerShadow.drawEllipse(0, 0, 80, 20, FlxColor.BLACK);
+		playerShadow.alpha = 0.5;
+		add(playerShadow);
+
+		player = new Cheerleader(PLAYER_X, PLAYER_Y);
 		add(player);
 
 		hud = new HUD();
@@ -65,6 +78,12 @@ class PlayState extends FlxState {
 		runner.setAnimSpeed(Math.abs(track.velocity.x));
 		grassBack.velocity.x = track.velocity.x * GRASS_BACK_SPEED_MULTIPLIER;
 		rafters.velocity.x = track.velocity.x * RAFTERS_SPEED_MULTIPLIER;
+
+		var shadowScale = Math.max(1.0, (PLAYER_Y / player.y) * 0.8);
+		var shadowAlpha = (player.y / PLAYER_Y) * 0.4;
+		playerShadow.scale.set(shadowScale, shadowScale);
+		playerShadow.alpha = shadowAlpha;
+
 		super.update(elapsed);
 	}
 
