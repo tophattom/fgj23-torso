@@ -28,6 +28,32 @@ class Cheerleader extends FlxNestedSprite {
 	var leftLegUp:Bool;
 	var rightLegUp:Bool;
 
+	public static function poseSize(pose:Pose) {
+		var size = 0;
+
+		if (pose & 1 != 0) {
+			size++;
+		}
+
+		if (pose & 2 != 0) {
+			size++;
+		}
+
+		if (pose & 4 != 0) {
+			size += 2;
+		}
+
+		if (pose & 8 != 0) {
+			size += 2;
+		}
+
+		if (pose & 16 != 0) {
+			size += 3;
+		}
+
+		return size;
+	}
+
 	public function new(x:Float, y:Float) {
 		super(x, y);
 		scrollFactor.set(0, 0);

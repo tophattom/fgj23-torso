@@ -50,7 +50,7 @@ class PlayState extends FlxState {
 		player = new Cheerleader(500, 190);
 		add(player);
 
-		var tracker = new ScoreTracker(player);
+		var tracker = new ScoreTracker(player, onScoreChange);
 
 		super.create();
 	}
@@ -60,5 +60,9 @@ class PlayState extends FlxState {
 		grassBack.velocity.x = track.velocity.x * GRASS_BACK_SPEED_MULTIPLIER;
 		rafters.velocity.x = track.velocity.x * RAFTERS_SPEED_MULTIPLIER;
 		super.update(elapsed);
+	}
+
+	function onScoreChange(diff:Float) {
+		track.velocity.x -= diff;
 	}
 }
