@@ -18,6 +18,9 @@ class PlayState extends FlxState {
 	var track:FlxBackdrop;
 	var runner:Runner;
 	var player:Cheerleader;
+	var hud:HUD;
+
+	var scoreTracker:ScoreTracker;
 
 	var speed:Float = INITIAL_SPEED;
 
@@ -50,7 +53,10 @@ class PlayState extends FlxState {
 		player = new Cheerleader(500, 190);
 		add(player);
 
-		var tracker = new ScoreTracker(player, onScoreChange);
+		hud = new HUD();
+		add(hud);
+
+		scoreTracker = new ScoreTracker(player, onScoreChange);
 
 		super.create();
 	}
@@ -64,5 +70,6 @@ class PlayState extends FlxState {
 
 	function onScoreChange(diff:Float) {
 		track.velocity.x -= diff;
+		hud.updateScore(scoreTracker.score);
 	}
 }
