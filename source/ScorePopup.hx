@@ -13,6 +13,6 @@ class ScorePopup extends FlxText {
 		super(x, y, 0, "+" + Math.abs(amount));
 		setFormat(AssetPaths.LilitaOne_Regular__ttf, 40, FlxColor.WHITE, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
-		FlxTween.tween(this, {alpha: 0, y: y - DISTANCE}, DURATION, {onComplete: (_) -> this.destroy()});
+		FlxTween.tween(this, { alpha: 0, y: y - DISTANCE }, DURATION, { onComplete: (_) -> this.destroy() });
 	}
 }
