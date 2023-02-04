@@ -4,12 +4,16 @@ import flixel.FlxG;
 import flixel.addons.display.FlxNestedSprite;
 import flixel.util.FlxColor;
 
+typedef Pose = Int;
+
 class Cheerleader extends FlxNestedSprite {
 	static inline var ARM_UP_ANGLE = 150.0;
 	static inline var LEG_UP_ANGLE = 60.0;
 
 	static inline var JUMP_FORCE = 700.0;
 	static inline var GRAVITY = 1500.0;
+
+	public var pose(get, never):Pose;
 
 	var leftArm:FlxNestedSprite;
 	var rightArm:FlxNestedSprite;
@@ -109,5 +113,31 @@ class Cheerleader extends FlxNestedSprite {
 			y = startY;
 			jumping = false;
 		}
+	}
+
+	function get_pose() {
+		var pose = 0;
+
+		if (leftArmUp) {
+			pose = pose ^ 1;
+		}
+
+		if (rightArmUp) {
+			pose = pose ^ 2;
+		}
+
+		if (leftLegUp) {
+			pose = pose ^ 4;
+		}
+
+		if (rightLegUp) {
+			pose = pose ^ 8;
+		}
+
+		if (jumping) {
+			pose = pose ^ 16;
+		}
+
+		return pose;
 	}
 }

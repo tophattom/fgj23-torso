@@ -33,6 +33,8 @@ class PlayState extends FlxState {
 		FlxG.camera.targetOffset.x = 200;
 		FlxG.camera.targetOffset.y = -70;
 
+		var tracker = new ScoreTracker(player);
+
 		super.create();
 	}
 
