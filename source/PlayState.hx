@@ -17,6 +17,8 @@ class PlayState extends FlxState {
 	static inline var PLAYER_X = 500;
 	static inline var PLAYER_Y = 190;
 
+	static inline var POPUP_OFFSET_Y = -35;
+
 	var background:FlxSprite;
 	var grassBack:FlxBackdrop;
 	var grassFront:FlxSprite;
@@ -89,6 +91,10 @@ class PlayState extends FlxState {
 
 	function onScoreChange(diff:Float) {
 		track.velocity.x -= diff;
-		hud.updateScore(scoreTracker.score);
+
+		if (diff > 0) {
+			hud.updateScore(scoreTracker.score);
+			add(new ScorePopup(PLAYER_X, player.y + POPUP_OFFSET_Y, diff));
+		}
 	}
 }

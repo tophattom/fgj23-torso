@@ -15,8 +15,6 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 		scoreText.setFormat(AssetPaths.LilitaOne_Regular__ttf, 40, FlxColor.WHITE, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
 		add(scoreText);
-
-		forEach((s) -> s.scrollFactor.set(0, 0));
 	}
 
 	public function updateScore(newScore:Float) {
