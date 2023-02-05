@@ -82,5 +82,6 @@
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	<template path="assets/index.html" rename="index.html" />
-
+	<icon path="assets/images/icon.png" size="128" />
+	<icon path="assets/images/icon.svg" size="128" />
 </project>
