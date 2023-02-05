@@ -64,7 +64,7 @@ class PlayState extends FlxState {
 		rafters.velocity.x = -INITIAL_SPEED * RAFTERS_SPEED_MULTIPLIER;
 		add(rafters);
 
-		track = new FlxBackdrop(AssetPaths.Track__png, X);
+		track = new FlxBackdrop(AssetPaths.racetrack__png, X);
 		track.y = 250;
 		track.velocity.x = -INITIAL_SPEED;
 		track.drag.x = INITIAL_DRAG;
