@@ -23,10 +23,14 @@ class GameOverState extends FlxState {
 	public var score:Float;
 
 	function retry() {
-		FlxG.switchState(new PlayState());
+		Utils.cameraFadeOut(Utils.FADE_DURATION, function() {
+			FlxG.switchState(new PlayState());
+		});
 	}
 
 	override public function create() {
+		Utils.cameraFadeIn();
+
 		super.create();
 
 		background = new FlxSprite(0, 0, AssetPaths.game_over_bg__png);

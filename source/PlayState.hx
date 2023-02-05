@@ -9,6 +9,12 @@ import flixel.util.FlxColor;
 
 using flixel.util.FlxSpriteUtil;
 
+enum GameState {
+	PLAYING;
+	LOST;
+	WON;
+}
+
 class PlayState extends FlxState {
 	static inline var INITIAL_SPEED = 200.0;
 	static inline var INITIAL_DRAG = 10.0;
@@ -35,7 +41,11 @@ class PlayState extends FlxState {
 
 	var music:FlxSound;
 
+	var gameState = GameState.PLAYING;
+
 	override public function create() {
+		Utils.cameraFadeIn();
+
 		super.create();
 
 		background = new FlxSprite(0, 0, AssetPaths.sky__png);
@@ -78,16 +88,19 @@ class PlayState extends FlxState {
 		scoreTracker = new ScoreTracker(player, onScoreChange);
 
 		if (music == null) {
-			music = FlxG.sound.play(AssetPaths.main_song__ogg, 1.0, false, null, true, endGame);
+			music = FlxG.sound.play(AssetPaths.main_song__ogg, 0.0, false, null, true, endGame);
+			music.fadeIn(Utils.FADE_DURATION);
 		}
 	}
 
 	override public function update(elapsed:Float) {
+		if (gameState != GameState.PLAYING) {
+			return;
+		}
+
 		if (track.velocity.x >= 0) {
-			var gameOverState = new GameOverState();
-			gameOverState.win = false;
-			gameOverState.score = scoreTracker.score;
-			FlxG.switchState(gameOverState);
+			gameState = GameState.LOST;
+			transitionToFailure();
 		}
 
 		runner.setAnimSpeed(Math.abs(track.velocity.x));
@@ -110,10 +123,25 @@ class PlayState extends FlxState {
 	}
 
 	function endGame() {
+		gameState = GameState.WON;
 		var gameOverState = new GameOverState();
 		gameOverState.win = true;
 		gameOverState.score = scoreTracker.score;
-		FlxG.switchState(gameOverState);
+
+		Utils.cameraFadeOut(Utils.FADE_DURATION, function() {
+			FlxG.switchState(gameOverState);
+		});
+	}
+
+	function transitionToFailure() {
+		var gameOverState = new GameOverState();
+		gameOverState.win = false;
+		gameOverState.score = scoreTracker.score;
+
+		Utils.cameraFadeOut();
+		music.fadeOut(Utils.FADE_DURATION, 0, function(_) {
+			FlxG.switchState(gameOverState);
+		});
 	}
 
 	function onScoreChange(diff:Float) {

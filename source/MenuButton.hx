@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 
 class MenuButton extends FlxButton {
 	public function new(x:Float, y:Float) {
@@ -10,6 +11,8 @@ class MenuButton extends FlxButton {
 	}
 
 	function switchToMenu() {
-		FlxG.switchState(new MenuState());
+		Utils.cameraFadeOut(Utils.FADE_DURATION, function() {
+			FlxG.switchState(new MenuState());
+		});
 	}
 }

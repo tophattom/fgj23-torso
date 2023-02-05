@@ -1,6 +1,19 @@
 package;
 
+import flixel.FlxG;
+import flixel.util.FlxColor;
+
 class Utils {
+	public static inline var FADE_DURATION = 0.33;
+
+	public static function cameraFadeOut(duration:Float = FADE_DURATION, ?onComplete:() -> Void = null) {
+		FlxG.camera.fade(FlxColor.BLACK, duration, false, onComplete);
+	}
+
+	public static function cameraFadeIn(duration:Float = FADE_DURATION) {
+		FlxG.camera.fade(FlxColor.BLACK, duration, true);
+	}
+
 	public static function findIndices<T>(arr:Array<T>, needle:T) {
 		var result = [];
 		var startIndex = 0;

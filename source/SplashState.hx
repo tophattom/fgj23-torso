@@ -11,6 +11,8 @@ import flixel.util.FlxColor;
 class SplashState extends FlxState {
 	static inline var MAX_SCALE = 1.1;
 
+	var started = false;
+
 	override function create() {
 		super.create();
 
@@ -27,9 +29,20 @@ class SplashState extends FlxState {
 	}
 
 	override function update(elapsed:Float) {
+		if (started) {
+			return;
+		}
+
 		if (FlxG.keys.firstJustPressed() != -1 || FlxG.mouse.justPressed) {
-			FlxG.switchState(new MenuState());
+			start();
 		}
 		super.update(elapsed);
+	}
+
+	function start() {
+		started = true;
+		Utils.cameraFadeOut(Utils.FADE_DURATION, function() {
+			FlxG.switchState(new MenuState());
+		});
 	}
 }
