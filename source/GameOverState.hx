@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
@@ -14,6 +15,9 @@ class GameOverState extends FlxState {
 	var scoreText:FlxText;
 	var retryButton:FlxButton;
 	var menuButton:FlxButton;
+
+	var winSound:FlxSound;
+	var lossSound:FlxSound;
 
 	public var win:Bool;
 	public var score:Float;
@@ -53,5 +57,9 @@ class GameOverState extends FlxState {
 
 		menuButton = new MenuButton(326, 307);
 		add(menuButton);
+
+		winSound = FlxG.sound.load(AssetPaths.win__wav);
+		lossSound = FlxG.sound.load(AssetPaths.loss__wav);
+		win ? winSound.play() : lossSound.play();
 	}
 }

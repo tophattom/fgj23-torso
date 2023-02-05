@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.addons.display.FlxNestedSprite;
+import flixel.system.FlxSound;
 
 typedef Pose = Int;
 
@@ -27,6 +28,10 @@ class Cheerleader extends FlxNestedSprite {
 	var rightArmUp:Bool;
 	var leftLegUp:Bool;
 	var rightLegUp:Bool;
+
+	var leftPompomSound:SoundSet;
+	var rightPompomSound:SoundSet;
+	var jumpSound:SoundSet;
 
 	public static function poseSize(pose:Pose) {
 		var size = 0;
@@ -98,6 +103,10 @@ class Cheerleader extends FlxNestedSprite {
 		rightArm.relativeX = 26;
 		rightArm.relativeY = -43;
 		add(rightArm);
+
+		leftPompomSound = new SoundSet([AssetPaths.pompom_l_1__wav, AssetPaths.pompom_l_2__wav]);
+		rightPompomSound = new SoundSet([AssetPaths.pompom_r_1__wav, AssetPaths.pompom_r_2__wav]);
+		jumpSound = new SoundSet([AssetPaths.jump_1__wav, AssetPaths.jump_2__wav], [0.7, 0.7]);
 	}
 
 	override function update(elapsed:Float) {
@@ -113,11 +122,21 @@ class Cheerleader extends FlxNestedSprite {
 		var prevRightLegUp = rightLegUp;
 		var canLiftLeftLeg = jumping || !prevRightLegUp;
 		var canLiftRightLeg = jumping || !prevLeftLegUp;
+		var prevLeftArmUp = leftArmUp;
+		var prevRightArmUp = rightArmUp;
 
 		leftArmUp = FlxG.keys.pressed.D;
 		rightArmUp = FlxG.keys.pressed.K;
 		leftLegUp = canLiftLeftLeg && FlxG.keys.pressed.F;
 		rightLegUp = canLiftRightLeg && FlxG.keys.pressed.J;
+
+		if (leftArmUp && !prevLeftArmUp) {
+			leftPompomSound.play();
+		}
+
+		if (rightArmUp && !prevRightArmUp) {
+			rightPompomSound.play();
+		}
 
 		if (!jumping && leftLegUp && rightLegUp) {
 			leftLegUp = rightLegUp = false;
@@ -166,6 +185,8 @@ class Cheerleader extends FlxNestedSprite {
 
 			velocity.y = -JUMP_FORCE;
 			acceleration.y = GRAVITY;
+
+			jumpSound.play();
 		}
 
 		if (y > startY) {
