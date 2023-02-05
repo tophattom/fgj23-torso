@@ -3,14 +3,16 @@ package;
 import Cheerleader.Pose;
 import flixel.util.FlxTimer;
 
+using Lambda;
+
 typedef ScoreCallbackFn = (diff:Float) -> Void;
 
 class ScoreTracker {
 	static inline var BPM = 132;
 	static inline var SAMPLE_INTERVAL = 1 / (BPM / 60);
-	static inline var MAX_SAMPLES = 10;
+	static inline var MAX_SAMPLES = 20;
 
-	static inline var SCORE_SIZE_MULTIPLIER = 2;
+	static inline var SCORE_SIZE_MULTIPLIER = 3;
 
 	var cheerleader:Cheerleader;
 	var timer:FlxTimer;
@@ -45,7 +47,8 @@ class ScoreTracker {
 
 	function getScoreDiff(pose):Float {
 		var poseSize = Cheerleader.poseSize(pose);
+		var samePoseCount = previousPoses.count((p) -> p == pose);
 
-		return poseSize * SCORE_SIZE_MULTIPLIER;
+		return poseSize * SCORE_SIZE_MULTIPLIER - (samePoseCount * Math.max(1, poseSize / 2));
 	}
 }
