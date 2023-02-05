@@ -23,6 +23,8 @@ class GameOverState extends FlxState {
 	}
 
 	override public function create() {
+		super.create();
+
 		background = new FlxSprite(0, 0, AssetPaths.game_over_bg__png);
 		add(background);
 
