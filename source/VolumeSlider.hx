@@ -1,3 +1,5 @@
+package;
+
 import flixel.FlxG;
 import flixel.addons.ui.FlxSlider;
 import flixel.text.FlxText;

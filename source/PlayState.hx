@@ -11,7 +11,8 @@ using flixel.util.FlxSpriteUtil;
 
 class PlayState extends FlxState {
 	static inline var INITIAL_SPEED = 200.0;
-	static inline var DRAG = 10.0;
+	static inline var INITIAL_DRAG = 10.0;
+	static inline var DRAG_MULTIPLIER = 1.0002;
 	static inline var GRASS_BACK_SPEED_MULTIPLIER = 0.5;
 	static inline var RAFTERS_SPEED_MULTIPLIER = 0.3;
 
@@ -34,8 +35,6 @@ class PlayState extends FlxState {
 
 	var music:FlxSound;
 
-	var speed:Float = INITIAL_SPEED;
-
 	override public function create() {
 		super.create();
 
@@ -44,7 +43,7 @@ class PlayState extends FlxState {
 
 		grassBack = new FlxBackdrop(AssetPaths.grass_back__png, X);
 		grassBack.y = 188;
-		grassBack.velocity.x = -speed * GRASS_BACK_SPEED_MULTIPLIER;
+		grassBack.velocity.x = -INITIAL_SPEED * GRASS_BACK_SPEED_MULTIPLIER;
 		add(grassBack);
 
 		grassFront = new FlxSprite(0, 377, AssetPaths.grass_front__png);
@@ -52,13 +51,13 @@ class PlayState extends FlxState {
 
 		rafters = new FlxBackdrop(AssetPaths.rafters__png, X);
 		rafters.y = 85;
-		rafters.velocity.x = -speed * RAFTERS_SPEED_MULTIPLIER;
+		rafters.velocity.x = -INITIAL_SPEED * RAFTERS_SPEED_MULTIPLIER;
 		add(rafters);
 
 		track = new FlxBackdrop(AssetPaths.Track__png, X);
 		track.y = 250;
-		track.velocity.x = -speed;
-		track.drag.x = DRAG;
+		track.velocity.x = -INITIAL_SPEED;
+		track.drag.x = INITIAL_DRAG;
 		add(track);
 
 		runner = new Runner(100, 100);
@@ -99,6 +98,8 @@ class PlayState extends FlxState {
 		var shadowAlpha = (player.y / PLAYER_Y) * 0.4;
 		playerShadow.scale.set(shadowScale, shadowScale);
 		playerShadow.alpha = shadowAlpha;
+
+		track.drag.x *= DRAG_MULTIPLIER;
 
 		if (FlxG.keys.justPressed.ESCAPE) {
 			openSubState(new PauseState());
