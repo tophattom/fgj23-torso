@@ -2,16 +2,20 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSubState;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
 class PauseState extends FlxSubState {
-	public function new() {
-		FlxTimer.globalManager.forEach((t) -> t.active = false);
-		FlxG.sound.pause();
+	var music:FlxSound;
 
+	public function new(music:FlxSound) {
 		super(FlxColor.fromRGB(0, 0, 0, 190));
+
+		FlxTimer.globalManager.forEach((t) -> t.active = false);
+
+		this.music = music;
 
 		var pausedText = new FlxText(0, 150, 0, "Paused");
 		pausedText.setFormat(AssetPaths.LilitaOne_Regular__ttf, 40, FlxColor.WHITE, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -29,7 +33,7 @@ class PauseState extends FlxSubState {
 	override function update(elapsed:Float) {
 		if (FlxG.keys.justPressed.ESCAPE) {
 			FlxTimer.globalManager.forEach((t) -> t.active = true);
-			FlxG.sound.resume();
+			music.resume();
 			close();
 		}
 

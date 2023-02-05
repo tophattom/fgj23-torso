@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.system.FlxSound;
 import flixel.ui.FlxButton;
 
 class MenuState extends FlxState {
@@ -10,7 +11,10 @@ class MenuState extends FlxState {
 	var newGameButton:FlxButton;
 	var volumeSlider:VolumeSlider;
 
+	var music:FlxSound;
+
 	function newGame() {
+		music.stop();
 		FlxG.switchState(new PlayState());
 	}
 
@@ -28,5 +32,8 @@ class MenuState extends FlxState {
 		add(volumeSlider);
 
 		FlxG.sound.cache(AssetPaths.main_song__ogg);
+		if (music == null) {
+			music = FlxG.sound.play(AssetPaths.menu_song__ogg, 1.0, true, FlxG.sound.defaultMusicGroup);
+		}
 	}
 }

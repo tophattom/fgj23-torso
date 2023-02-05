@@ -102,7 +102,8 @@ class PlayState extends FlxState {
 		track.drag.x *= DRAG_MULTIPLIER;
 
 		if (FlxG.keys.justPressed.ESCAPE) {
-			openSubState(new PauseState());
+			music.pause();
+			openSubState(new PauseState(music));
 		}
 
 		super.update(elapsed);
