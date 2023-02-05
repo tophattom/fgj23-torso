@@ -48,7 +48,8 @@ class ScoreTracker {
 	function getScoreDiff(pose):Float {
 		var poseSize = Cheerleader.poseSize(pose);
 		var samePoseCount = previousPoses.count((p) -> p == pose);
+		var diff = poseSize * SCORE_SIZE_MULTIPLIER - (samePoseCount * Math.max(1, poseSize / 2));
 
-		return poseSize * SCORE_SIZE_MULTIPLIER - (samePoseCount * Math.max(1, poseSize / 2));
+		return Math.min(0, diff);
 	}
 }
