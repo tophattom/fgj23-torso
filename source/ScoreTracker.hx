@@ -11,10 +11,12 @@ class ScoreTracker {
 	static inline var BPM = 132;
 	static inline var SAMPLE_INTERVAL = 1 / (BPM / 60);
 	static inline var MAX_SAMPLES = 20;
+	static inline var SAMPLING_POINT_DELAY = 60 / 1000;
 
 	static inline var SCORE_SIZE_MULTIPLIER = 3;
 
 	var cheerleader:Cheerleader;
+	var delayTimer:FlxTimer;
 	var timer:FlxTimer;
 
 	var previousPoses:Array<Pose> = [];
@@ -27,8 +29,11 @@ class ScoreTracker {
 
 		scoreCallback = onScoreChange;
 
+		delayTimer = new FlxTimer();
 		timer = new FlxTimer();
-		timer.start(SAMPLE_INTERVAL, samplePose, 0);
+		delayTimer.start(SAMPLING_POINT_DELAY, (_) -> {
+			timer.start(SAMPLE_INTERVAL, samplePose, 0);
+		});
 	}
 
 	function samplePose(t:FlxTimer) {
